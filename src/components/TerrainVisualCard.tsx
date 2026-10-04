@@ -16,6 +16,12 @@ export const TerrainVisualCard: React.FC<TerrainVisualCardProps> = ({
   const [activeFeature, setActiveFeature] = useState<TerrainFeature | null>(null);
   const [viewMode, setViewMode] = useState<'realistic' | 'structural'>('realistic');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [currentImgSrc, setCurrentImgSrc] = useState(region.image);
+
+  // Sync if region prop changes
+  React.useEffect(() => {
+    setCurrentImgSrc(region.image);
+  }, [region.image]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -29,6 +35,18 @@ export const TerrainVisualCard: React.FC<TerrainVisualCardProps> = ({
     setActiveFeature(null);
   };
 
+  const handleImageError = () => {
+    // If bundled asset fails for any reason, fallback to public directory path
+    const fallbackMap: Record<string, string> = {
+      'dong-bac': '/images/region_dong_bac_1791109952497.jpg',
+      'tay-bac': '/images/region_tay_bac_1791109965527.jpg',
+      'nam-bo': '/images/region_nam_bo_1791109977644.jpg',
+    };
+    if (fallbackMap[region.id] && currentImgSrc !== fallbackMap[region.id]) {
+      setCurrentImgSrc(fallbackMap[region.id]);
+    }
+  };
+
   return (
     <div
       className={`relative group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-xl transition-all duration-300 ${className}`}
@@ -37,7 +55,7 @@ export const TerrainVisualCard: React.FC<TerrainVisualCardProps> = ({
     >
       {/* Visual Canvas Container with 3D Tilt */}
       <div
-        className="relative w-full overflow-hidden transition-transform duration-200 ease-out"
+        className="relative w-full overflow-hidden transition-transform duration-200 ease-out bg-slate-950"
         style={{
           height: isCompact ? '180px' : '230px',
           transform: `perspective(700px) rotateY(${mousePos.x}deg) rotateX(${mousePos.y}deg)`,
@@ -45,20 +63,17 @@ export const TerrainVisualCard: React.FC<TerrainVisualCardProps> = ({
       >
         {/* Layer 1: Realistic Generated 3D Landscape */}
         <img
-          src={region.image}
+          src={currentImgSrc}
           alt={`Mô hình địa hình 3D ${region.title}`}
           referrerPolicy="no-referrer"
           className={`w-full h-full object-cover transition-all duration-500 ${
-            viewMode === 'structural' ? 'opacity-25 grayscale contrast-125' : 'opacity-90 group-hover:scale-105'
+            viewMode === 'structural' ? 'opacity-55 brightness-90 contrast-110' : 'opacity-100 group-hover:scale-105'
           }`}
-          onError={(e) => {
-            // Fallback gradient if asset fails to load
-            (e.target as HTMLElement).style.display = 'none';
-          }}
+          onError={handleImageError}
         />
 
         {/* Gradient Scrim for Contrast & Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
 
         {/* Layer 2: Interactive SVG Topographic Diagram Overlay */}
         <svg

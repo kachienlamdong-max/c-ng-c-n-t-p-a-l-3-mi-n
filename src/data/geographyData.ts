@@ -1,4 +1,7 @@
 import { GameCard, RegionId, RegionInfo } from '../types';
+import dongBacImg from '../assets/images/region_dong_bac_1791109952497.jpg';
+import tayBacImg from '../assets/images/region_tay_bac_1791109965527.jpg';
+import namBoImg from '../assets/images/region_nam_bo_1791109977644.jpg';
 
 export const REGIONS_DATA: Record<RegionId, RegionInfo> = {
   'dong-bac': {
@@ -7,7 +10,7 @@ export const REGIONS_DATA: Record<RegionId, RegionInfo> = {
     title: 'Miền Bắc và Đông Bắc Bắc Bộ',
     shortName: 'Bắc & Đông Bắc Bắc Bộ',
     geographicSpan: 'Vùng đồi núi Đông Bắc & Đồng bằng sông Hồng (tả ngạn sông Hồng)',
-    image: '/src/assets/images/region_dong_bac_1791109952497.jpg',
+    image: dongBacImg,
     themeColor: {
       accent: 'text-sky-400',
       border: 'border-sky-500/40',
@@ -111,7 +114,7 @@ export const REGIONS_DATA: Record<RegionId, RegionInfo> = {
     title: 'Miền Tây Bắc và Bắc Trung Bộ',
     shortName: 'Tây Bắc & Bắc Trung Bộ',
     geographicSpan: 'Từ hữu ngạn sông Hồng đến ranh giới tự nhiên dãy Bạch Mã (vĩ tuyến 16°B)',
-    image: '/src/assets/images/region_tay_bac_1791109965527.jpg',
+    image: tayBacImg,
     themeColor: {
       accent: 'text-amber-400',
       border: 'border-amber-500/40',
@@ -213,7 +216,7 @@ export const REGIONS_DATA: Record<RegionId, RegionInfo> = {
     title: 'Miền Nam Trung Bộ và Nam Bộ',
     shortName: 'Nam Trung Bộ & Nam Bộ',
     geographicSpan: 'Từ phía nam dãy Bạch Mã kéo dài đến hết Mũi Cà Mau',
-    image: '/src/assets/images/region_nam_bo_1791109977644.jpg',
+    image: namBoImg,
     themeColor: {
       accent: 'text-emerald-400',
       border: 'border-emerald-500/40',

@@ -374,18 +374,26 @@ export const DragDropGameView: React.FC<DragDropGameViewProps> = ({
               </h3>
 
               {/* 3D Visual Terrain Model Frame */}
-              <div className="relative rounded-xl overflow-hidden border border-slate-800 mb-3 group">
+              <div className="relative rounded-xl overflow-hidden border border-slate-800 mb-3 group bg-slate-950">
                 <img
                   src={region.image}
                   alt={region.title}
                   referrerPolicy="no-referrer"
                   className="w-full h-36 object-cover transition-transform duration-300 group-hover:scale-105"
                   onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
+                    const fallbackMap: Record<string, string> = {
+                      'dong-bac': '/images/region_dong_bac_1791109952497.jpg',
+                      'tay-bac': '/images/region_tay_bac_1791109965527.jpg',
+                      'nam-bo': '/images/region_nam_bo_1791109977644.jpg',
+                    };
+                    const target = e.currentTarget;
+                    if (fallbackMap[region.id] && target.src !== fallbackMap[region.id]) {
+                      target.src = fallbackMap[region.id];
+                    }
                   }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-                <div className="absolute bottom-2 left-2.5 right-2.5 text-[11px] text-slate-300 font-medium">
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-2 left-2.5 right-2.5 text-[11px] text-slate-200 font-medium">
                   {region.terrain3DDescription}
                 </div>
               </div>

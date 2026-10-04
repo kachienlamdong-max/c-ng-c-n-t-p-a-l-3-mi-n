@@ -77,6 +77,17 @@ export const Terrain3DExplorerView: React.FC<Terrain3DExplorerViewProps> = ({
               alt={region.title}
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              onError={(e) => {
+                const fallbackMap: Record<string, string> = {
+                  'dong-bac': '/images/region_dong_bac_1791109952497.jpg',
+                  'tay-bac': '/images/region_tay_bac_1791109965527.jpg',
+                  'nam-bo': '/images/region_nam_bo_1791109977644.jpg',
+                };
+                const target = e.currentTarget;
+                if (fallbackMap[region.id] && target.src !== fallbackMap[region.id]) {
+                  target.src = fallbackMap[region.id];
+                }
+              }}
             />
 
             {/* Gradient Scrim */}

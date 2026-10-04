@@ -10,7 +10,25 @@ class SoundEngine {
   private masterGain: GainNode | null = null;
 
   constructor() {
-    // AudioContext will be initialized on first user gesture
+    // Automatically unlock Web Audio on first touch/click for mobile browsers (iOS/Android)
+    if (typeof window !== 'undefined') {
+      const unlock = () => {
+        this.unlockAudio();
+        window.removeEventListener('touchstart', unlock);
+        window.removeEventListener('touchend', unlock);
+        window.removeEventListener('click', unlock);
+      };
+      window.addEventListener('touchstart', unlock, { passive: true });
+      window.addEventListener('touchend', unlock, { passive: true });
+      window.addEventListener('click', unlock);
+    }
+  }
+
+  public unlockAudio() {
+    this.initContext();
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
   }
 
   private initContext() {

@@ -535,12 +535,52 @@ export const DragDropGameView: React.FC<DragDropGameViewProps> = ({
                     </div>
                   )}
 
-                  {/* Drag / Select affordance footer */}
+      {/* Drag / Select affordance footer */}
                   <div className="pt-2 flex items-center justify-between text-[10px] text-slate-500 border-t border-slate-900">
-                    <span>Kéo hoặc chạm để chọn</span>
+                    <span>Kéo chuột hoặc bấm nút:</span>
                     {isSelected && (
-                      <span className="text-emerald-400 font-semibold">Đã chọn ✓</span>
+                      <span className="text-emerald-400 font-semibold">Đang chọn ✓</span>
                     )}
+                  </div>
+
+                  {/* Mobile & Fast Tap Quick Assign Buttons */}
+                  <div className="mt-2 pt-2 border-t border-slate-900/80 flex items-center justify-between gap-1 text-[11px]">
+                    <span className="text-[10px] text-slate-500 font-medium">Thả vào:</span>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAssignCardToRegion(card.id, 'dong-bac');
+                        }}
+                        title="Thả vào Miền I (Bắc & Đông Bắc Bắc Bộ)"
+                        className="px-2 py-1 rounded-lg bg-sky-950/80 hover:bg-sky-900 text-sky-300 border border-sky-800/70 font-semibold transition-all cursor-pointer text-[11px] active:scale-95"
+                      >
+                        Miền I
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAssignCardToRegion(card.id, 'tay-bac');
+                        }}
+                        title="Thả vào Miền II (Tây Bắc & Bắc Trung Bộ)"
+                        className="px-2 py-1 rounded-lg bg-amber-950/80 hover:bg-amber-900 text-amber-300 border border-amber-800/70 font-semibold transition-all cursor-pointer text-[11px] active:scale-95"
+                      >
+                        Miền II
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAssignCardToRegion(card.id, 'nam-bo');
+                        }}
+                        title="Thả vào Miền III (Nam Trung Bộ & Nam Bộ)"
+                        className="px-2 py-1 rounded-lg bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800/70 font-semibold transition-all cursor-pointer text-[11px] active:scale-95"
+                      >
+                        Miền III
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
@@ -548,6 +588,54 @@ export const DragDropGameView: React.FC<DragDropGameViewProps> = ({
           </div>
         )}
       </div>
+
+      {/* Floating Bottom Drawer for Mobile when a card is selected */}
+      {selectedCardId && (
+        <aside aria-label="Khung điều khiển thả thẻ nhanh" className="fixed bottom-4 left-3 right-3 sm:left-auto sm:right-6 sm:max-w-md z-40 p-3.5 bg-slate-900/95 border-2 border-emerald-400 rounded-2xl shadow-2xl backdrop-blur-md flex flex-col gap-2.5 animate-fadeIn">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Đang chọn thẻ:</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => setSelectedCardId(null)}
+              className="text-[11px] text-slate-400 hover:text-white px-1.5 py-0.5 rounded cursor-pointer"
+            >
+              Hủy chọn ✕
+            </button>
+          </div>
+
+          <p className="text-xs text-slate-200 font-medium line-clamp-2">
+            {deck.find((c) => c.id === selectedCardId)?.text}
+          </p>
+
+          <div className="flex items-center gap-1.5 pt-1 border-t border-slate-800">
+            <span className="text-[11px] text-slate-400 mr-1">Chạm để thả:</span>
+            <button
+              type="button"
+              onClick={() => handleAssignCardToRegion(selectedCardId, 'dong-bac')}
+              className="flex-1 py-1.5 text-xs font-bold rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/40 hover:bg-sky-500/30 transition-all cursor-pointer active:scale-95"
+            >
+              Miền I
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAssignCardToRegion(selectedCardId, 'tay-bac')}
+              className="flex-1 py-1.5 text-xs font-bold rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition-all cursor-pointer active:scale-95"
+            >
+              Miền II
+            </button>
+            <button
+              type="button"
+              onClick={() => handleAssignCardToRegion(selectedCardId, 'nam-bo')}
+              className="flex-1 py-1.5 text-xs font-bold rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all cursor-pointer active:scale-95"
+            >
+              Miền III
+            </button>
+          </div>
+        </aside>
+      )}
 
       {/* Completion Modal / Celebration Dialog */}
       {isCompleted && (

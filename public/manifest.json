@@ -1,0 +1,25 @@
+{
+  "id": "/",
+  "name": "Ba Miền Địa Lý Tự Nhiên Việt Nam",
+  "short_name": "Địa Lý 3 Miền",
+  "description": "Ứng dụng mô phỏng tương tác ôn tập kiến thức Địa lý 3 miền tự nhiên Việt Nam trên điện thoại và máy tính mà không cần cài đặt.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "/images/region_dong_bac_1791109952497.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/region_dong_bac_1791109952497.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

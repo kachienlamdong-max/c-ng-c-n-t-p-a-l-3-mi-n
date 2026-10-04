@@ -8,11 +8,13 @@ import { TopBar, AppViewMode } from './components/TopBar';
 import { ParallelReadingView } from './components/ParallelReadingView';
 import { DragDropGameView } from './components/DragDropGameView';
 import { Terrain3DExplorerView } from './components/Terrain3DExplorerView';
+import { ShareModal } from './components/ShareModal';
 import { soundEngine } from './utils/audioEffects';
 
 export default function App() {
   const [currentView, setCurrentView] = useState<AppViewMode>('parallel-reading');
   const [isMuted, setIsMuted] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const [gameScore, setGameScore] = useState(0);
   const [gameCardsRemaining, setGameCardsRemaining] = useState(0);
   const [resetSignal, setResetSignal] = useState(0);
@@ -40,8 +42,15 @@ export default function App() {
         isMuted={isMuted}
         onToggleMute={handleToggleMute}
         onResetGame={handleResetGame}
+        onOpenShare={() => setIsShareOpen(true)}
         gameScore={gameScore}
         gameCardsRemaining={gameCardsRemaining}
+      />
+
+      {/* Share & Mobile QR Modal */}
+      <ShareModal
+        isOpen={isShareOpen}
+        onClose={() => setIsShareOpen(false)}
       />
 
       {/* Main Content Area */}

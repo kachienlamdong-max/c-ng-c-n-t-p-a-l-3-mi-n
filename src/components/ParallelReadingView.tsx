@@ -34,8 +34,12 @@ export const ParallelReadingView: React.FC<ParallelReadingViewProps> = ({
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<CriterionCategory>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [mobileRegionFilter, setMobileRegionFilter] = useState<'all' | RegionId>('all');
 
-  const regionsList = Object.values(REGIONS_DATA);
+  const allRegions = Object.values(REGIONS_DATA);
+  const regionsList = mobileRegionFilter === 'all' 
+    ? allRegions 
+    : allRegions.filter(r => r.id === mobileRegionFilter);
 
   // Criteria categories to render
   const categoriesToRender: Exclude<CriterionCategory, 'all'>[] = 
@@ -51,6 +55,8 @@ export const ParallelReadingView: React.FC<ParallelReadingViewProps> = ({
           <div className="flex items-center gap-2 text-xs text-emerald-400 font-medium mb-1.5">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Phần 1 · Đọc & So Sánh Song Song Toàn Diện</span>
+            <span aria-hidden="true" className="text-slate-600">·</span>
+            <span className="text-slate-400">Dùng trực tiếp trên web</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-serif">
             Đặc Điểm Ba Miền Địa Lý Tự Nhiên
@@ -69,6 +75,57 @@ export const ParallelReadingView: React.FC<ParallelReadingViewProps> = ({
           >
             <span>Thực hành Kéo thả</span>
             <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile-Friendly Region Switcher (Shows on small screens to easily focus) */}
+      <div className="flex lg:hidden items-center justify-between gap-1 p-1.5 bg-slate-900 rounded-2xl border border-slate-800 overflow-x-auto text-xs">
+        <span className="text-[11px] text-slate-400 px-2 shrink-0 font-medium">Xem miền:</span>
+        <div className="flex items-center gap-1 shrink-0">
+          <button
+            type="button"
+            onClick={() => setMobileRegionFilter('all')}
+            className={`px-2.5 py-1.5 rounded-xl font-medium transition-colors cursor-pointer ${
+              mobileRegionFilter === 'all'
+                ? 'bg-emerald-500 text-slate-950 font-bold'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Cả 3 miền
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileRegionFilter('dong-bac')}
+            className={`px-2.5 py-1.5 rounded-xl font-medium transition-colors cursor-pointer ${
+              mobileRegionFilter === 'dong-bac'
+                ? 'bg-sky-500 text-slate-950 font-bold'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Miền I
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileRegionFilter('tay-bac')}
+            className={`px-2.5 py-1.5 rounded-xl font-medium transition-colors cursor-pointer ${
+              mobileRegionFilter === 'tay-bac'
+                ? 'bg-amber-500 text-slate-950 font-bold'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Miền II
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileRegionFilter('nam-bo')}
+            className={`px-2.5 py-1.5 rounded-xl font-medium transition-colors cursor-pointer ${
+              mobileRegionFilter === 'nam-bo'
+                ? 'bg-emerald-400 text-slate-950 font-bold'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Miền III
           </button>
         </div>
       </div>

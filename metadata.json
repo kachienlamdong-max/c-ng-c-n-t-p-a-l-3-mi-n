@@ -1,0 +1,6 @@
+{
+  "name": "Ba Miền Địa Lý Tự Nhiên Việt Nam",
+  "description": "Ứng dụng mô phỏng tương tác ôn tập kiến thức Địa lý 3 miền tự nhiên Việt Nam với bản đồ trực quan, so sánh song song và trò chơi kéo thả tương tác kèm hiệu ứng pháo hoa, âm thanh.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
